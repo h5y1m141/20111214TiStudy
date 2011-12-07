@@ -44,16 +44,16 @@ var tab2 = Titanium.UI.createTab({
     window:win2
 });
 
-var label2 = Titanium.UI.createLabel({
-	color:'#999',
-	text:'I am Window 2',
-	font:{fontSize:20,fontFamily:'Helvetica Neue'},
-	textAlign:'center',
-	width:'auto'
-});
 
-win2.add(label2);
-
+var tableViewData = [
+  {title:'Row1',hasChild:true},
+  {title:'Row2',hasDetail:true},
+  {title:'Row3',hasCheck:true}
+];
+var tableView = Titanium.UI.createTableView({
+	data:tableViewData
+})
+win2.add(tableView);
 
 
 //

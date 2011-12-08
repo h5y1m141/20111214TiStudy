@@ -49,8 +49,8 @@ for(var i=0;i<9;i++){
   var row = Titanium.UI.createTableViewRow({
     height:80
   });
-
-  var iconImage = Titanium.UI.createImageView({
+  
+var iconImage = Titanium.UI.createImageView({
     left:5,
     top:5,
     width:50,

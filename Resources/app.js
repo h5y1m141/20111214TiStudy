@@ -76,15 +76,32 @@ var tab3 = Titanium.UI.createTab({
     window:win3
 });
 
-var label3 = Titanium.UI.createLabel({
-	color:'#999',
-	text:'I am Window 3',
-	font:{fontSize:20,fontFamily:'Helvetica Neue'},
-	textAlign:'center',
-	width:'auto'
-});
-win3.add(label3);
+var label3 = Titanium.UI.createLabel();
+if(Titanium.Network.online===false){
+  var dialog = Ti.UI.createAlertDialog({
+    title: "ネットワーク接続できていません"
+  });
+  dialog.show();
+}
+var xhr = Titanium.Network.createHTTPClient();
+//https://dev.twitter.com/docs/api/1/get/statuses/public_timeline
+var twitterTL = 'https://api.twitter.com/1/statuses/public_timeline.json?count=3&include_entities=true';
+var httpMethod = 'GET';
+xhr.open(httpMethod,twitterTL);
+xhr.onload = function(){
+  var tweets = JSON.parse(this.responseText);
+  label3.text =tweets[0].text;
+};
+xhr.error =  function(){
+  var dialog = Ti.UI.createAlertDialog({
+    title: "HTTP Client error",
+    message: "StatusCode: " + this.status
+  });
+  return dialog.show();
+};
+xhr.send();
 
+win3.add(label3);
 
 //
 //  add tabs

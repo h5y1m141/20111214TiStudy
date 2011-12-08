@@ -3,21 +3,21 @@ Titanium.UI.setBackgroundColor('#000');
 var tabGroup = Titanium.UI.createTabGroup();
 
 var win1 = Titanium.UI.createWindow({
-    title:'Tab 1',
-    backgroundColor:'#fff'
+  title:'Tab 1',
+  backgroundColor:'#fff'
 });
 var tab1 = Titanium.UI.createTab({
-    icon:'KS_nav_views.png',
-    title:'Tab 1',
-    window:win1
+  icon:'KS_nav_views.png',
+  title:'Tab 1',
+  window:win1
 });
 
 var label1 = Titanium.UI.createLabel({
-	color:'#999',
-	text:'I am Window 1',
-	font:{fontSize:20,fontFamily:'Helvetica Neue'},
-	textAlign:'center',
-	width:'auto'
+  color:'#999',
+  text:'I am Window 1',
+  font:{fontSize:20,fontFamily:'Helvetica Neue'},
+  textAlign:'center',
+  width:'auto'
 });
 label1.addEventListener('click',function(e){
 	alert('clickされたよ！');
@@ -26,13 +26,13 @@ label1.addEventListener('click',function(e){
 win1.add(label1);
 
 var win2 = Titanium.UI.createWindow({
-    title:'Tab 2',
-    backgroundColor:'#fff'
+  title:'Tab 2',
+  backgroundColor:'#fff'
 });
 var tab2 = Titanium.UI.createTab({
-    icon:'KS_nav_ui.png',
-    title:'Tab 2',
-    window:win2
+  icon:'KS_nav_ui.png',
+  title:'Tab 2',
+  window:win2
 });
 
 var container = [];
@@ -67,16 +67,17 @@ tableView.setData(container);
 win2.add(tableView);
 
 var win3 = Titanium.UI.createWindow({
-    title:'Tab 3',
+    title:'Twitter TL',
     backgroundColor:'#fff'
 });
 var tab3 = Titanium.UI.createTab({
     icon:'KS_nav_views.png',
-    title:'Tab 3',
+    title:'Twitter TL',
     window:win3
 });
 
-var label3 = Titanium.UI.createLabel();
+
+var tweetTableView = Titanium.UI.createTableView();
 if(Titanium.Network.online===false){
   var dialog = Ti.UI.createAlertDialog({
     title: "ネットワーク接続できていません"
@@ -90,7 +91,30 @@ var httpMethod = 'GET';
 xhr.open(httpMethod,twitterTL);
 xhr.onload = function(){
   var tweets = JSON.parse(this.responseText);
-  label3.text =tweets[0].text;
+  var container = [];
+  for(var i=0;i<tweets.length;i++){
+    var row = Titanium.UI.createTableViewRow({
+      height:80
+    });
+    var tweetText = Titanium.UI.createLabel({
+      top:10,
+      left:60,
+      width:240,
+      height:'auto',
+      text:tweets[i].text
+    });
+    row.add(tweetText);
+    var iconImage = Titanium.UI.createImageView({
+      left:5,
+      top:5,
+      width:50,
+      height:50,
+      image:tweets[i].user.profile_image_url
+    });
+    row.add(iconImage);
+    container.push(row);
+  }
+  tweetTableView.setData(container);
 };
 xhr.error =  function(){
   var dialog = Ti.UI.createAlertDialog({
@@ -101,7 +125,7 @@ xhr.error =  function(){
 };
 xhr.send();
 
-win3.add(label3);
+win3.add(tweetTableView);
 
 //
 //  add tabs

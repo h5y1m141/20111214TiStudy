@@ -87,8 +87,7 @@ if(Titanium.Network.online===false){
 var xhr = Titanium.Network.createHTTPClient();
 //https://dev.twitter.com/docs/api/1/get/statuses/public_timeline
 var twitterTL = 'https://api.twitter.com/1/statuses/public_timeline.json?count=3&include_entities=true';
-var httpMethod = 'GET';
-xhr.open(httpMethod,twitterTL);
+xhr.open('GET',twitterTL,false);
 xhr.onload = function(){
   var tweets = JSON.parse(this.responseText);
   var container = [];

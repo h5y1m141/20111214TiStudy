@@ -1,0 +1,5 @@
+curl -k https://www.google.com/accounts/ClientLogin -d Email=YOURGMAIL -d Passwd=YOURPASSWORD -d service=reader
+
+curl -s "http://www.google.com/reader/api/0/unread-count?all=true&autorefresh=true&output=json" --header "Authorization : GoogleLogin auth=さっき取得したAuthの値"
+
+curl https://stream.twitter.com/1/statuses/sample.json -uYOUR_TWITTER_USERNAME:YOUR_PASSWORD
